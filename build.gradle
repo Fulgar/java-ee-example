@@ -12,6 +12,22 @@ repositories {
     mavenCentral()
 }
 
+task buildAngular(type: Exec, dependsOn: ['npmInstall']) {
+    workingDir("src/main/client")
+    inputs.dir("src/main/client")
+    group BasePlugin.BUILD_GROUP
+    commandLine("ng.cmd", "build")
+}
+
+task npmInstall(type: Exec) {
+    workingDir("src/main/client")
+    inputs.dir("src/main/client")
+    group BasePlugin.BUILD_GROUP
+    commandLine("npm.cmd", "install")
+}
+
+build.dependsOn buildAngular
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'junit', name: 'junit', version: '4.12'
